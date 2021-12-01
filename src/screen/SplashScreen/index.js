@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
+import * as color from '../../styles/colorStyles';
 
 function SplashScreen(props) {
   useEffect(() => {
@@ -10,21 +11,29 @@ function SplashScreen(props) {
       } else {
         props.navigation.navigate('AuthScreen');
       }
-    }, 1000);
+    }, 3000);
   });
 
   return (
     <View style={styles.container}>
-      <Text>SplashScreen</Text>
+      <Image
+        source={require('../../assets/img/tickitzWhite.png')}
+        style={styles.logoImage}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  logoImage: {
+    resizeMode: 'contain',
+    width: 200,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: color.primary,
   },
 });
 
