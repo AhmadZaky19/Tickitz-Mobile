@@ -1,0 +1,15 @@
+export const primary = '#5F2EEA';
+export const primaryDark = '#9570FE';
+export const white = '#FFFFFF';
+export const border = '#DEDEDE';
+export const placeholder = '#A0A3BD';
+export const textTitle = '#14142B';
+export const textBody1 = '#4E4B66';
+export const textBody2 = '#AAAAAA';
+export const textLabel = '#6E7191';
+export const inputBg = '#FCFDFE';
+export const background1 = '#D6D8E7';
+export const background2 = '#F5F6F8';
+export const error = '#ED2E7E';
+export const success = '#00BA88';
+export const warning = '#F4B740';
