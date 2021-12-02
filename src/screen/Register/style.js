@@ -68,7 +68,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: 90,
+    marginHorizontal: 120,
     marginTop: 20,
   },
   logoBox: {
@@ -76,7 +76,7 @@ export default StyleSheet.create({
     borderColor: color.white,
     backgroundColor: color.white,
     borderRadius: 12,
-    elevation: 1,
+    elevation: 5,
     padding: 10,
   },
   logoBottom: {

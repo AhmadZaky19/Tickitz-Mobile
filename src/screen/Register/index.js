@@ -6,6 +6,9 @@ import styles from './style';
 import style from './style';
 
 function Register(props) {
+  const handleToLogin = () => {
+    props.navigation.navigate('Login');
+  };
   const [showPassword, setShowPassword] = useState(true);
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -41,7 +44,7 @@ function Register(props) {
         <Text style={styles.forgotPassText}>
           Do you already have an account?
         </Text>
-        <Pressable>
+        <Pressable onPress={handleToLogin}>
           <Text style={styles.forgotPassTextLink}>Log in</Text>
         </Pressable>
       </View>

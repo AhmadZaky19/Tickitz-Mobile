@@ -6,6 +6,14 @@ import styles from './style';
 import style from './style';
 
 function Login(props) {
+  const handleLogin = () => {
+    props.navigation.navigate('AppScreen', {
+      screen: 'Home',
+    });
+  };
+  const handleForgotPassword = () => {
+    props.navigation.navigate('Forgot Password');
+  };
   const [showPassword, setShowPassword] = useState(true);
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -36,11 +44,19 @@ function Login(props) {
         }
         secureTextEntry={showPassword}
       />
-      <Button title="Sign In" buttonStyle={styles.button} />
+      <Button
+        title="Sign In"
+        buttonStyle={styles.button}
+        onPress={handleLogin}
+      />
       <View style={styles.forgotPass}>
         <Text style={styles.forgotPassText}>Forgot your password?</Text>
         <Pressable>
-          <Text style={styles.forgotPassTextLink}>Reset now</Text>
+          <Text
+            style={styles.forgotPassTextLink}
+            onPress={handleForgotPassword}>
+            Reset now
+          </Text>
         </Pressable>
       </View>
       <View style={style.sectionOr}>

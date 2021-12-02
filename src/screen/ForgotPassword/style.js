@@ -20,7 +20,7 @@ export default StyleSheet.create({
     marginHorizontal: 10,
   },
   authDesc: {
-    fontSize: 15,
+    fontSize: 17.5,
     marginHorizontal: 10,
     marginBottom: 30,
   },
