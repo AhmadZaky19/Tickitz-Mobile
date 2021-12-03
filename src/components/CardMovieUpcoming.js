@@ -3,7 +3,10 @@ import {Text, View, StyleSheet} from 'react-native';
 import {Button, Card} from 'react-native-elements';
 import * as color from '../styles/colorStyles';
 
-function CardMovieUpcoming() {
+function CardMovieUpcoming({navigation}) {
+  const handleDetail = () => {
+    navigation.navigate('MovieDetail');
+  };
   return (
     <>
       <Card containerStyle={styles.cardMovie}>
@@ -19,6 +22,7 @@ function CardMovieUpcoming() {
           title="Details"
           buttonStyle={styles.buttonDetail}
           titleStyle={styles.buttonDetailTitle}
+          onPress={handleDetail}
         />
       </Card>
       <Card containerStyle={styles.cardMovie}>
@@ -34,6 +38,7 @@ function CardMovieUpcoming() {
           title="Details"
           buttonStyle={styles.buttonDetail}
           titleStyle={styles.buttonDetailTitle}
+          onPress={handleDetail}
         />
       </Card>
       <Card containerStyle={styles.cardMovie}>
@@ -49,6 +54,7 @@ function CardMovieUpcoming() {
           title="Details"
           buttonStyle={styles.buttonDetail}
           titleStyle={styles.buttonDetailTitle}
+          onPress={handleDetail}
         />
       </Card>
       <Card containerStyle={styles.cardMovie}>
@@ -64,6 +70,7 @@ function CardMovieUpcoming() {
           title="Details"
           buttonStyle={styles.buttonDetail}
           titleStyle={styles.buttonDetailTitle}
+          onPress={handleDetail}
         />
       </Card>
     </>

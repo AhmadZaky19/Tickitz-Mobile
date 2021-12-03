@@ -3,7 +3,10 @@ import {Text, View, StyleSheet} from 'react-native';
 import {Button, Card} from 'react-native-elements';
 import * as color from '../styles/colorStyles';
 
-function CardMovieNow() {
+function CardMovieNow({navigation}) {
+  const handleDetail = () => {
+    navigation.navigate('MovieDetail');
+  };
   return (
     <>
       <Card containerStyle={styles.cardMovie}>
@@ -19,6 +22,7 @@ function CardMovieNow() {
           title="Details"
           buttonStyle={styles.buttonDetail}
           titleStyle={styles.buttonDetailTitle}
+          onPress={handleDetail}
         />
         <Button
           title="Book now"
@@ -39,6 +43,7 @@ function CardMovieNow() {
           title="Details"
           buttonStyle={styles.buttonDetail}
           titleStyle={styles.buttonDetailTitle}
+          onPress={handleDetail}
         />
         <Button
           title="Book now"
@@ -59,6 +64,7 @@ function CardMovieNow() {
           title="Details"
           buttonStyle={styles.buttonDetail}
           titleStyle={styles.buttonDetailTitle}
+          onPress={handleDetail}
         />
         <Button
           title="Book now"
@@ -79,6 +85,7 @@ function CardMovieNow() {
           title="Details"
           buttonStyle={styles.buttonDetail}
           titleStyle={styles.buttonDetailTitle}
+          onPress={handleDetail}
         />
         <Button
           title="Book now"

@@ -27,7 +27,7 @@ function Home(props) {
           <Text style={styles.movieListHeaderRight}>view all</Text>
         </View>
         <ScrollView horizontal>
-          <CardMovieNow />
+          <CardMovieNow navigation={props.navigation} />
         </ScrollView>
       </View>
       <View style={styles.movieList}>
@@ -41,7 +41,7 @@ function Home(props) {
           </ScrollView>
         </View>
         <ScrollView horizontal>
-          <CardMovieUpcoming />
+          <CardMovieUpcoming navigation={props.navigation} />
         </ScrollView>
       </View>
       <View>

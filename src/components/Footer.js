@@ -67,7 +67,7 @@ function Footer() {
 
 const styles = StyleSheet.create({
   footer: {
-    marginVertical: 30,
+    marginVertical: 50,
     marginHorizontal: 20,
   },
   logoImage: {
@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
   footerEnd: {
     color: color.textLabel,
     marginTop: 50,
-    marginBottom: 30,
   },
 });
 
