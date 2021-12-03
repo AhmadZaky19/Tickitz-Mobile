@@ -52,6 +52,10 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     borderColor: 'rgba(186, 186, 186, 0.15)',
+    // elevation: 1,
+    // shadowOffset: {width: 0, height: 0},
+    // shadowOpacity: 51.1,
+    // shadowRadius: 5,
   },
   joinTextTop: {
     alignItems: 'center',

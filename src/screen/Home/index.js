@@ -3,6 +3,9 @@ import {Text, View, ScrollView, Image, FlatList} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import styles from './style';
 
+import CardMovieNow from '../../components/CardMovieNow';
+import MonthFilter from '../../components/MonthFilter';
+import CardMovieUpcoming from '../../components/CardMovieUpcoming';
 import Footer from '../../components/Footer';
 
 function Home(props) {
@@ -23,9 +26,9 @@ function Home(props) {
           <Text style={styles.movieListHeaderLeft}>Now Showing</Text>
           <Text style={styles.movieListHeaderRight}>view all</Text>
         </View>
-        <View>
-          <FlatList />
-        </View>
+        <ScrollView horizontal>
+          <CardMovieNow />
+        </ScrollView>
       </View>
       <View style={styles.movieList}>
         <View style={styles.movieListHeader}>
@@ -33,8 +36,13 @@ function Home(props) {
           <Text style={styles.movieListHeaderRight}>view all</Text>
         </View>
         <View>
-          <FlatList />
+          <ScrollView horizontal>
+            <MonthFilter />
+          </ScrollView>
         </View>
+        <ScrollView horizontal>
+          <CardMovieUpcoming />
+        </ScrollView>
       </View>
       <View>
         <View style={styles.join}>

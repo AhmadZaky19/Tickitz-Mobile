@@ -5,21 +5,68 @@ import * as color from '../styles/colorStyles';
 
 function CardMovieUpcoming() {
   return (
-    <Card containerStyle={styles.cardMovie}>
-      <View style={styles.movieImageSection}>
-        <Card.Image
-          source={require('../assets/img/Lionking.png')}
-          style={styles.movieImage}
+    <>
+      <Card containerStyle={styles.cardMovie}>
+        <View style={styles.movieImageSection}>
+          <Card.Image
+            source={require('../assets/img/Lionking.png')}
+            style={styles.movieImage}
+          />
+        </View>
+        <Text style={styles.movieName}>The Lion King</Text>
+        <Text style={styles.movieGenre}>Adventure, Slice of Life</Text>
+        <Button
+          title="Details"
+          buttonStyle={styles.buttonDetail}
+          titleStyle={styles.buttonDetailTitle}
         />
-      </View>
-      <Text style={styles.movieName}>The Lion King</Text>
-      <Text style={styles.movieGenre}>Adventure, Slice of Life</Text>
-      <Button
-        title="Details"
-        buttonStyle={styles.buttonDetail}
-        titleStyle={styles.buttonDetailTitle}
-      />
-    </Card>
+      </Card>
+      <Card containerStyle={styles.cardMovie}>
+        <View style={styles.movieImageSection}>
+          <Card.Image
+            source={require('../assets/img/Lionking.png')}
+            style={styles.movieImage}
+          />
+        </View>
+        <Text style={styles.movieName}>The Lion King</Text>
+        <Text style={styles.movieGenre}>Adventure, Slice of Life</Text>
+        <Button
+          title="Details"
+          buttonStyle={styles.buttonDetail}
+          titleStyle={styles.buttonDetailTitle}
+        />
+      </Card>
+      <Card containerStyle={styles.cardMovie}>
+        <View style={styles.movieImageSection}>
+          <Card.Image
+            source={require('../assets/img/Lionking.png')}
+            style={styles.movieImage}
+          />
+        </View>
+        <Text style={styles.movieName}>The Lion King</Text>
+        <Text style={styles.movieGenre}>Adventure, Slice of Life</Text>
+        <Button
+          title="Details"
+          buttonStyle={styles.buttonDetail}
+          titleStyle={styles.buttonDetailTitle}
+        />
+      </Card>
+      <Card containerStyle={styles.cardMovie}>
+        <View style={styles.movieImageSection}>
+          <Card.Image
+            source={require('../assets/img/Lionking.png')}
+            style={styles.movieImage}
+          />
+        </View>
+        <Text style={styles.movieName}>The Lion King</Text>
+        <Text style={styles.movieGenre}>Adventure, Slice of Life</Text>
+        <Button
+          title="Details"
+          buttonStyle={styles.buttonDetail}
+          titleStyle={styles.buttonDetailTitle}
+        />
+      </Card>
+    </>
   );
 }
 

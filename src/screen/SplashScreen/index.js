@@ -4,7 +4,7 @@ import * as color from '../../styles/colorStyles';
 
 function SplashScreen(props) {
   useEffect(() => {
-    const token = false;
+    const token = true;
     setTimeout(() => {
       if (token) {
         props.navigation.navigate('AppScreen');
