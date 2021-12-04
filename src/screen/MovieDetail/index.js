@@ -1,15 +1,27 @@
 import React, {useState} from 'react';
-import {ScrollView, View, Text, Image} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-import {Input, Button} from 'react-native-elements';
+import {ScrollView, View, Text, Image, Pressable} from 'react-native';
+import {Card, Button} from 'react-native-elements';
+import DatePicker from 'react-native-date-picker';
+import {Select} from 'native-base';
 import styles from './style';
 
+import CardSchedule from '../../components/CardSchedule';
 import Footer from '../../components/Footer';
+
+import ebvid from '../../assets/img/ebuid.png';
+// import cineone from '../../assets/img/cineone.png';
+// import hiflix from '../../assets/img/hiflix.png';
 
 function MovieDetail(props) {
   // const handleBook = () => {
   //   props.navigation.navigate('Order');
   // };
+
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+
+  let [language, setLanguage] = React.useState();
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.movieImage}>
@@ -55,6 +67,32 @@ function MovieDetail(props) {
       </View>
       <View style={styles.schedule}>
         <Text style={styles.scheduleTitle}>Showtime and Tickets</Text>
+        <Button title="Open" onPress={() => setOpen(true)} />
+        <DatePicker
+          modal
+          open={open}
+          date={date}
+          onConfirm={date => {
+            setOpen(false);
+            setDate(date);
+          }}
+          onCancel={() => {
+            setOpen(false);
+          }}
+        />
+        <View style={styles.citySchedule}>
+          <Select
+            placeholder="Set a city"
+            selectedValue={language}
+            onValueChange={itemValue => setLanguage(itemValue)}
+            style={styles.formSelect}>
+            <Select.Item label="Jakarta" value="jakarta" />
+            <Select.Item label="Bandung" value="bandung" />
+            <Select.Item label="Semarang" value="semarang" />
+            <Select.Item label="Surabaya" value="surabaya" />
+          </Select>
+        </View>
+        <CardSchedule />
       </View>
       <Footer />
     </ScrollView>

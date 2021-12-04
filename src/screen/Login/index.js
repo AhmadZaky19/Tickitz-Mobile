@@ -3,7 +3,6 @@ import {View, Text, Image, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {Input, Button} from 'react-native-elements';
 import styles from './style';
-import style from './style';
 
 function Login(props) {
   const handleLogin = () => {
@@ -59,7 +58,7 @@ function Login(props) {
           </Text>
         </Pressable>
       </View>
-      <View style={style.sectionOr}>
+      <View style={styles.sectionOr}>
         <View style={styles.orLine} />
         <View>
           <Text style={styles.orText}>Or</Text>

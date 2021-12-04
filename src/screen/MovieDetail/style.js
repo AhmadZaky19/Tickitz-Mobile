@@ -77,4 +77,12 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     color: '#000000',
   },
+  citySchedule: {
+    marginVertical: 20,
+    marginHorizontal: 100,
+  },
+  formSelect: {
+    color: '#000000',
+    backgroundColor: '#EFF0F6',
+  },
 });
