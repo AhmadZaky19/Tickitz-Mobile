@@ -17,6 +17,7 @@ export default StyleSheet.create({
   },
   seatOrder: {
     borderRadius: 8,
+    marginHorizontal: 20,
   },
   screenLine: {
     flex: 1,
