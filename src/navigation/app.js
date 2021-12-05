@@ -10,6 +10,7 @@ import Home from '../screen/Home';
 import MovieDetail from '../screen/MovieDetail';
 import Order from '../screen/Order';
 import Payment from '../screen/Payment';
+import Ticket from '../screen/Ticket';
 import Profile from '../screen/Profile';
 
 import DrawerContent from '../components/DrawerContent';
@@ -35,6 +36,11 @@ function HomeNavigator() {
       <Stack.Screen
         component={Payment}
         name="Payment"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Ticket}
+        name="Ticket"
         options={{headerShown: false}}
       />
     </Stack.Navigator>
