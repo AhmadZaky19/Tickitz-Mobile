@@ -8,9 +8,9 @@ import ebvid from '../assets/img/ebuid.png';
 // import hiflix from '../assets/img/hiflix.png';
 
 function CardSchedule({navigation}) {
-  // const handleDetail = () => {
-  //   navigation.navigate('MovieDetail');
-  // };
+  const handleBook = () => {
+    navigation.navigate('Order');
+  };
   return (
     <>
       <Card containerStyle={styles.cardSchedule}>
@@ -53,7 +53,11 @@ function CardSchedule({navigation}) {
           <Text style={styles.seatDesc}>Price</Text>
           <Text style={styles.seatPrice}>$10.00/seat</Text>
         </View>
-        <Button title="Book now" buttonStyle={styles.button} />
+        <Button
+          title="Book now"
+          buttonStyle={styles.button}
+          onPress={handleBook}
+        />
       </Card>
       <Card containerStyle={styles.cardSchedule}>
         <View style={styles.scheduleImage}>
@@ -95,7 +99,11 @@ function CardSchedule({navigation}) {
           <Text style={styles.seatDesc}>Price</Text>
           <Text style={styles.seatPrice}>$10.00/seat</Text>
         </View>
-        <Button title="Book now" buttonStyle={styles.button} />
+        <Button
+          title="Book now"
+          buttonStyle={styles.button}
+          onPress={handleBook}
+        />
       </Card>
       <View style={styles.sectionMore}>
         <View style={styles.moreLine} />

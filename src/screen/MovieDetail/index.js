@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {ScrollView, View, Text, Image, Pressable} from 'react-native';
-import {Card, Button} from 'react-native-elements';
+import {ScrollView, View, Text, Image} from 'react-native';
+import {Button} from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
 import {Select} from 'native-base';
 import styles from './style';
@@ -8,15 +8,7 @@ import styles from './style';
 import CardSchedule from '../../components/CardSchedule';
 import Footer from '../../components/Footer';
 
-import ebvid from '../../assets/img/ebuid.png';
-// import cineone from '../../assets/img/cineone.png';
-// import hiflix from '../../assets/img/hiflix.png';
-
 function MovieDetail(props) {
-  // const handleBook = () => {
-  //   props.navigation.navigate('Order');
-  // };
-
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
 
@@ -92,7 +84,7 @@ function MovieDetail(props) {
             <Select.Item label="Surabaya" value="surabaya" />
           </Select>
         </View>
-        <CardSchedule />
+        <CardSchedule navigation={props.navigation} />
       </View>
       <Footer />
     </ScrollView>
