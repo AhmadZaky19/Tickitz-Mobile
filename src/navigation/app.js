@@ -1,5 +1,4 @@
 import React from 'react';
-import {Image} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Feather';
@@ -9,6 +8,8 @@ const Drawer = createDrawerNavigator();
 
 import Home from '../screen/Home';
 import MovieDetail from '../screen/MovieDetail';
+import Order from '../screen/Order';
+import Payment from '../screen/Payment';
 import Profile from '../screen/Profile';
 
 import DrawerContent from '../components/DrawerContent';
@@ -24,6 +25,16 @@ function HomeNavigator() {
       <Stack.Screen
         component={MovieDetail}
         name="MovieDetail"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Order}
+        name="Order"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Payment}
+        name="Payment"
         options={{headerShown: false}}
       />
     </Stack.Navigator>
