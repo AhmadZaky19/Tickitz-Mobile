@@ -4,6 +4,9 @@ import {Input, Button} from 'react-native-elements';
 import styles from './style';
 
 function ForgotPassword(props) {
+  const handleForgotPassword = () => {
+    props.navigation.navigate('Confirm Password');
+  };
   return (
     <View style={styles.container}>
       <Image
@@ -20,7 +23,11 @@ function ForgotPassword(props) {
         keyboardType="email-address"
         inputContainerStyle={styles.input}
       />
-      <Button title="Activate now" buttonStyle={styles.button} />
+      <Button
+        title="Activate now"
+        buttonStyle={styles.button}
+        onPress={handleForgotPassword}
+      />
     </View>
   );
 }
