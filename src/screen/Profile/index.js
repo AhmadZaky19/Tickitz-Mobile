@@ -3,6 +3,7 @@ import {useWindowDimensions, Text, ScrollView} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 
 import DetailsAccount from '../../components/DetailsAccount';
+import OrderHistory from '../../components/orderHistory';
 import Footer from '../../components/Footer';
 
 import styles from './style';
@@ -16,7 +17,7 @@ const FirstRoute = () => (
 
 const SecondRoute = () => (
   <ScrollView contentContainerStyle={styles.container}>
-    <Text>hello world 2</Text>
+    <OrderHistory />
     <Footer />
   </ScrollView>
 );
