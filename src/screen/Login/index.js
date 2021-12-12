@@ -2,17 +2,39 @@ import React, {useState} from 'react';
 import {View, Text, Image, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {Input, Button} from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {connect} from 'react-redux';
+import {login} from '../../stores/actions/auth';
+
 import styles from './style';
 
 function Login(props) {
-  const handleLogin = () => {
-    props.navigation.navigate('AppScreen', {
-      screen: 'Home',
-    });
+  const [form, setForm] = useState({email: '', password: ''});
+
+  const handleLogin = async () => {
+    try {
+      const result = await props.login(form);
+      await AsyncStorage.setItem('token', result.value.data.data.token);
+      await AsyncStorage.setItem(
+        'refreshToken',
+        result.value.data.data.refreshToken,
+      );
+      props.navigation.navigate('AppScreen', {
+        screen: 'Home',
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const handleInput = (text, name) => {
+    setForm({...form, [name]: text});
+  };
+
   const handleForgotPassword = () => {
     props.navigation.navigate('Forgot Password');
   };
+
   const [showPassword, setShowPassword] = useState(true);
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -29,6 +51,7 @@ function Login(props) {
         placeholder="Write your email"
         keyboardType="email-address"
         inputContainerStyle={styles.input}
+        onChangeText={text => handleInput(text, 'email')}
       />
       <Input
         label="Password"
@@ -41,6 +64,7 @@ function Login(props) {
             size={20}
           />
         }
+        onChangeText={text => handleInput(text, 'password')}
         secureTextEntry={showPassword}
       />
       <Button
@@ -83,4 +107,10 @@ function Login(props) {
   );
 }
 
-export default Login;
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+const mapDispatchToProps = {login};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
