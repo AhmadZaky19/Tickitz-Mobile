@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, Image, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {Input, Button} from 'react-native-elements';
+import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {connect} from 'react-redux';
 import {login} from '../../stores/actions/auth';
@@ -19,11 +20,12 @@ function Login(props) {
         'refreshToken',
         result.value.data.data.refreshToken,
       );
+      Toast.show(result.value.data.msg);
       props.navigation.navigate('AppScreen', {
         screen: 'Home',
       });
     } catch (error) {
-      console.log(error);
+      Toast.show(error.response.data.msg);
     }
   };
 
