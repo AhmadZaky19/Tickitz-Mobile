@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Image, Pressable} from 'react-native';
+import {View, Text, Image, Pressable, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {Input, Button} from 'react-native-elements';
 import Toast from 'react-native-simple-toast';
@@ -11,6 +11,10 @@ import styles from './style';
 
 function Login(props) {
   const [form, setForm] = useState({email: '', password: ''});
+
+  const handleToRegister = () => {
+    props.navigation.navigate('Register');
+  };
 
   const handleLogin = async () => {
     try {
@@ -42,7 +46,7 @@ function Login(props) {
     setShowPassword(!showPassword);
   };
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image
         source={require('../../assets/img/tickitzPurple.png')}
         style={styles.logoImage}
@@ -74,6 +78,12 @@ function Login(props) {
         buttonStyle={styles.button}
         onPress={handleLogin}
       />
+      <View style={styles.register}>
+        <Text style={styles.registerText}>Didn't have an account?</Text>
+        <Pressable onPress={handleToRegister}>
+          <Text style={styles.registerTextLink}>Sign up</Text>
+        </Pressable>
+      </View>
       <View style={styles.forgotPass}>
         <Text style={styles.forgotPassText}>Forgot your password?</Text>
         <Pressable>
@@ -105,7 +115,7 @@ function Login(props) {
           />
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

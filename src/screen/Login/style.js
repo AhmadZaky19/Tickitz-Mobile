@@ -50,6 +50,21 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: color.primary,
   },
+  register: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+  registerText: {
+    fontSize: 16,
+  },
+  registerTextLink: {
+    fontSize: 16,
+    color: color.primary,
+    marginLeft: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: color.primary,
+  },
   sectionOr: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -70,6 +85,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: 120,
     marginTop: 30,
+    marginBottom: 50,
   },
   logoBox: {
     borderWidth: 1,
