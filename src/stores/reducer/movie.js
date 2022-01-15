@@ -1,13 +1,15 @@
 const initialState = {
-  idUser: '',
-  isError: false,
   isLoading: false,
+  isError: false,
   msg: '',
+  data: [],
+  pageInfo: {},
+  isUpdate: false,
 };
 
-const auth = (state = initialState, action) => {
+const movie = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOGIN_PENDING': {
+    case 'GET_DATA_MOVIE_PENDING': {
       return {
         ...state,
         isLoading: true,
@@ -15,25 +17,27 @@ const auth = (state = initialState, action) => {
         msg: '',
       };
     }
-    case 'LOGIN_FULFILLED': {
+    case 'GET_DATA_MOVIE_FULFILLED': {
       return {
         ...state,
         isLoading: false,
         isError: false,
-        idUser: action.payload.data.data.id,
         msg: action.payload.data.msg,
+        data: action.payload.data.data,
+        pageInfo: action.payload.data.pagination,
       };
     }
-    case 'LOGIN_REJECTED': {
+    case 'GET_DATA_MOVIE_REJECTED': {
       return {
         ...state,
         isLoading: false,
         isError: true,
-        idUser: '',
         msg: action.payload.response.data.msg,
+        data: [],
+        pageInfo: {},
       };
     }
-    case 'REGISTER_PENDING': {
+    case 'GET_DATA_MOVIE_BY_ID_PENDING': {
       return {
         ...state,
         isLoading: true,
@@ -41,28 +45,30 @@ const auth = (state = initialState, action) => {
         msg: '',
       };
     }
-    case 'REGISTER_FULFILLED': {
+    case 'GET_DATA_MOVIE_BY_ID_FULFILLED': {
       return {
         ...state,
         isLoading: false,
         isError: false,
-        idUser: action.payload.data.data.id,
         msg: action.payload.data.msg,
+        data: action.payload.data.data,
       };
     }
-    case 'REGISTER_REJECTED': {
+    case 'GET_DATA_MOVIE_BY_ID_REJECTED': {
       return {
         ...state,
         isLoading: false,
         isError: true,
-        idUser: '',
         msg: action.payload.response.data.msg,
+        data: [],
       };
     }
     default: {
-      return state;
+      return {
+        ...state,
+      };
     }
   }
 };
 
-export default auth;
+export default movie;

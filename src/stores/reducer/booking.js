@@ -1,13 +1,13 @@
 const initialState = {
-  idUser: '',
   isError: false,
   isLoading: false,
   msg: '',
+  data: [],
 };
 
-const auth = (state = initialState, action) => {
+const booking = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOGIN_PENDING': {
+    case 'POST_BOOKING_PENDING': {
       return {
         ...state,
         isLoading: true,
@@ -15,25 +15,23 @@ const auth = (state = initialState, action) => {
         msg: '',
       };
     }
-    case 'LOGIN_FULFILLED': {
+    case 'POST_BOOKING_FULFILLED': {
       return {
         ...state,
         isLoading: false,
         isError: false,
-        idUser: action.payload.data.data.id,
         msg: action.payload.data.msg,
       };
     }
-    case 'LOGIN_REJECTED': {
+    case 'POST_BOOKING_REJECTED': {
       return {
         ...state,
         isLoading: false,
         isError: true,
-        idUser: '',
         msg: action.payload.response.data.msg,
       };
     }
-    case 'REGISTER_PENDING': {
+    case 'GET_BOOKING_BY_USER_ID_PENDING': {
       return {
         ...state,
         isLoading: true,
@@ -41,21 +39,20 @@ const auth = (state = initialState, action) => {
         msg: '',
       };
     }
-    case 'REGISTER_FULFILLED': {
+    case 'GET_BOOKING_BY_USER_ID_FULFILLED': {
       return {
         ...state,
         isLoading: false,
         isError: false,
-        idUser: action.payload.data.data.id,
+        data: action.payload.data.data,
         msg: action.payload.data.msg,
       };
     }
-    case 'REGISTER_REJECTED': {
+    case 'GET_BOOKING_BY_USER_ID_REJECTED': {
       return {
         ...state,
         isLoading: false,
         isError: true,
-        idUser: '',
         msg: action.payload.response.data.msg,
       };
     }
@@ -65,4 +62,4 @@ const auth = (state = initialState, action) => {
   }
 };
 
-export default auth;
+export default booking;
