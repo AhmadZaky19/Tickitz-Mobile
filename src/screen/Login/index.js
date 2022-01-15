@@ -11,9 +11,14 @@ import styles from './style';
 
 function Login(props) {
   const [form, setForm] = useState({email: '', password: ''});
+  const [showPassword, setShowPassword] = useState(true);
 
   const handleToRegister = () => {
     props.navigation.navigate('Register');
+  };
+
+  const handleForgotPassword = () => {
+    props.navigation.navigate('Forgot Password');
   };
 
   const handleLogin = async () => {
@@ -37,16 +42,12 @@ function Login(props) {
     setForm({...form, [name]: text});
   };
 
-  const handleForgotPassword = () => {
-    props.navigation.navigate('Forgot Password');
-  };
-
-  const [showPassword, setShowPassword] = useState(true);
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Image
         source={require('../../assets/img/tickitzPurple.png')}
         style={styles.logoImage}

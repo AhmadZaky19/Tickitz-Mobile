@@ -5,35 +5,45 @@ import {
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from '../utils/axios';
 
 import Icon from 'react-native-vector-icons/Feather';
 
-class DrawerContent extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <DrawerContentScrollView {...this.props}>
-          <View style={styles.containerProfile}>
-            <View style={styles.avatar} />
-            <View style={styles.biodata}>
-              <Text style={styles.title}>Anonymous</Text>
-              <Text style={styles.caption}>@bagustea</Text>
-            </View>
+function DrawerContent(props) {
+  const handleSignout = async () => {
+    try {
+      await axios.post('auth/logout');
+      await AsyncStorage.clear();
+      props.navigation.navigate('AuthScreen', {screen: 'Login'});
+    } catch (err) {
+      console.log(err);
+    }
+    alert('Signed out');
+  };
+  return (
+    <View style={styles.container}>
+      <DrawerContentScrollView {...props}>
+        <View style={styles.containerProfile}>
+          <View style={styles.avatar} />
+          <View style={styles.biodata}>
+            <Text style={styles.title}>Anonymous</Text>
+            <Text style={styles.caption}>Moviegoers</Text>
           </View>
-          <DrawerItemList {...this.props} />
-        </DrawerContentScrollView>
-        <View style={styles.containerSection}>
-          <DrawerItem
-            label="Sign Out"
-            icon={({color, size}) => (
-              <Icon color={color} size={size} name="log-out" />
-            )}
-            onPress={() => alert('Logged out')}
-          />
         </View>
+        <DrawerItemList {...props} />
+      </DrawerContentScrollView>
+      <View style={styles.containerSection}>
+        <DrawerItem
+          label="Sign Out"
+          icon={({color, size}) => (
+            <Icon color={color} size={size} name="log-out" />
+          )}
+          onPress={handleSignout}
+        />
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
