@@ -69,7 +69,8 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginHorizontal: 120,
-    marginTop: 20,
+    marginTop: 30,
+    marginBottom: 50,
   },
   logoBox: {
     borderWidth: 1,
