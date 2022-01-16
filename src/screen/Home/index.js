@@ -1,16 +1,17 @@
-import React, {useEffect} from 'react';
-import {Text, View, ScrollView, Image, FlatList} from 'react-native';
+import React from 'react';
+import {Text, View, ScrollView, Image} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import styles from './style';
 
 import CardMovieNow from '../../components/CardMovieNow';
-import MonthFilter from '../../components/MonthFilter';
 import CardMovieUpcoming from '../../components/CardMovieUpcoming';
 import Footer from '../../components/Footer';
 
 function Home(props) {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
         <Text style={styles.header1}>Nearest Cinema, Newest Movie,</Text>
         <Text style={styles.header2}>Find out now!</Text>
@@ -26,23 +27,14 @@ function Home(props) {
           <Text style={styles.movieListHeaderLeft}>Now Showing</Text>
           <Text style={styles.movieListHeaderRight}>view all</Text>
         </View>
-        <ScrollView horizontal>
-          <CardMovieNow navigation={props.navigation} />
-        </ScrollView>
+        <CardMovieNow navigation={props.navigation} />
       </View>
       <View style={styles.movieList}>
         <View style={styles.movieListHeader}>
           <Text style={styles.movieListHeaderLeft}>Upcoming Movies</Text>
           <Text style={styles.movieListHeaderRight}>view all</Text>
         </View>
-        <View>
-          <ScrollView horizontal>
-            <MonthFilter />
-          </ScrollView>
-        </View>
-        <ScrollView horizontal>
-          <CardMovieUpcoming navigation={props.navigation} />
-        </ScrollView>
+        <CardMovieUpcoming navigation={props.navigation} />
       </View>
       <View>
         <View style={styles.join}>
