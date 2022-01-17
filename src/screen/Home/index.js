@@ -2,12 +2,16 @@ import React from 'react';
 import {Text, View, ScrollView, Image} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import styles from './style';
-
+import Toast from 'react-native-simple-toast';
 import CardMovieNow from '../../components/CardMovieNow';
 import CardMovieUpcoming from '../../components/CardMovieUpcoming';
 import Footer from '../../components/Footer';
 
 function Home(props) {
+  const comingSoon = () => {
+    Toast.show('Coming soon');
+  };
+
   return (
     <ScrollView
       contentContainerStyle={styles.container}
@@ -25,14 +29,18 @@ function Home(props) {
       <View style={styles.movieList}>
         <View style={styles.movieListHeader}>
           <Text style={styles.movieListHeaderLeft}>Now Showing</Text>
-          <Text style={styles.movieListHeaderRight}>view all</Text>
+          <Text style={styles.movieListHeaderRight} onPress={comingSoon}>
+            view all
+          </Text>
         </View>
         <CardMovieNow navigation={props.navigation} />
       </View>
       <View style={styles.movieList}>
         <View style={styles.movieListHeader}>
           <Text style={styles.movieListHeaderLeft}>Upcoming Movies</Text>
-          <Text style={styles.movieListHeaderRight}>view all</Text>
+          <Text style={styles.movieListHeaderRight} onPress={comingSoon}>
+            view all
+          </Text>
         </View>
         <CardMovieUpcoming navigation={props.navigation} />
       </View>
