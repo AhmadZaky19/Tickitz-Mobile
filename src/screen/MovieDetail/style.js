@@ -15,7 +15,7 @@ export default StyleSheet.create({
     borderRadius: 8,
   },
   movieImageItem: {
-    resizeMode: 'contain',
+    // resizeMode: 'contain',
     width: 159,
     height: 244,
   },
@@ -84,5 +84,73 @@ export default StyleSheet.create({
   formSelect: {
     color: '#000000',
     backgroundColor: '#EFF0F6',
+  },
+  cardSchedule: {
+    borderRadius: 8,
+    marginHorizontal: 40,
+    marginBottom: 20,
+  },
+  scheduleImage: {
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  cinemaImage: {
+    resizeMode: 'contain',
+    width: 76.85,
+    height: 28.89,
+  },
+  cinemaAddress: {
+    textAlign: 'center',
+    marginHorizontal: 40,
+    marginVertical: 10,
+    color: '#AAAAAA',
+    fontSize: 13,
+    lineHeight: 20,
+  },
+  scheduleTime: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  timeList: {
+    paddingRight: 10,
+    marginHorizontal: 10,
+  },
+  time: {
+    fontSize: 12,
+    color: color.textBody1,
+  },
+  schedulePrice: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 20,
+    marginHorizontal: 10,
+  },
+  seatDesc: {
+    color: '#6B6B6B',
+  },
+  seatPrice: {
+    fontWeight: '600',
+    color: '#000000',
+  },
+  button: {
+    backgroundColor: color.primary,
+    marginHorizontal: 10,
+    marginBottom: 10,
+  },
+  sectionMore: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 40,
+    marginVertical: 40,
+  },
+  moreLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: color.border,
+  },
+  moreText: {
+    width: 100,
+    textAlign: 'center',
+    color: color.primary,
   },
 });

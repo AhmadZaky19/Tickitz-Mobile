@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import {Button, Card} from 'react-native-elements';
 import {useDispatch, useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getDataMovie} from '../stores/actions/movie';
 import * as color from '../styles/colorStyles';
 
@@ -23,8 +24,9 @@ function CardMovieNow({navigation}) {
     }
   };
 
-  const handleDetail = () => {
-    navigation.navigate('MovieDetail');
+  const handleDetail = async item => {
+    await AsyncStorage.setItem('nameMovie', item.name);
+    return navigation.navigate('MovieDetail', {movieId: item.id});
   };
 
   useEffect(() => {
@@ -68,7 +70,7 @@ function CardMovieNow({navigation}) {
                 title="Details"
                 buttonStyle={styles.buttonDetail}
                 titleStyle={styles.buttonDetailTitle}
-                onPress={handleDetail}
+                onPress={() => handleDetail(item)}
               />
             </Card>
           )}
