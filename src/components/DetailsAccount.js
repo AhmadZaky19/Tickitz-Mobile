@@ -22,6 +22,7 @@ function DetailsAccount(props) {
     lastName: userData.dataUser.lastName,
     email: userData.dataUser.email,
     phoneNumber: userData.dataUser.phoneNumber,
+    image: userData.dataUser.image,
   });
   const [newPass, setNewPass] = useState({
     newPassword: '',
@@ -71,16 +72,18 @@ function DetailsAccount(props) {
       <Card containerStyle={styles.info}>
         <View style={styles.infoHeader}>
           <Text style={styles.infoText}>INFO</Text>
-          <Image
-            source={require('../assets/img/dot_3.png')}
-            style={styles.dotImage}
-          />
         </View>
         <View style={styles.avatar}>
           <Avatar
             size={140}
             rounded
-            source={require('../assets/img/AhmadZaky.jpg')}>
+            source={
+              getUser.image
+                ? {
+                    uri: `http://192.168.1.5:3001/uploads/user/${getUser.image}`,
+                  }
+                : require('../assets/img/user_icon.png')
+            }>
             <Avatar.Accessory size={35} />
           </Avatar>
         </View>
