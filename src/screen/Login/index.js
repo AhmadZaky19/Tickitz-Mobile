@@ -30,6 +30,10 @@ function Login(props) {
         result.value.data.data.refreshToken,
       );
       Toast.show(result.value.data.msg);
+      setForm({
+        email: '',
+        password: '',
+      });
       props.navigation.navigate('AppScreen', {
         screen: 'Home',
       });
@@ -59,6 +63,7 @@ function Login(props) {
         keyboardType="email-address"
         inputContainerStyle={styles.input}
         onChangeText={text => handleInput(text, 'email')}
+        value={form.email}
       />
       <Input
         label="Password"
@@ -73,6 +78,7 @@ function Login(props) {
         }
         onChangeText={text => handleInput(text, 'password')}
         secureTextEntry={showPassword}
+        value={form.password}
       />
       <Button
         title="Sign In"
