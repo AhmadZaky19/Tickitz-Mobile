@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
-import {Button, Card, Avatar, Input} from 'react-native-elements';
-import * as Progress from 'react-native-progress';
-import Icon from 'react-native-vector-icons/Feather';
+import {Button, Card} from 'react-native-elements';
 import * as color from '../styles/colorStyles';
 
 function OrderHistory() {
