@@ -109,11 +109,12 @@ export default StyleSheet.create({
   },
   scheduleTime: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     marginTop: 10,
   },
   timeList: {
-    paddingRight: 10,
-    marginHorizontal: 10,
+    marginBottom: 10,
+    marginHorizontal: 22,
   },
   time: {
     fontSize: 12,
@@ -152,5 +153,12 @@ export default StyleSheet.create({
     width: 100,
     textAlign: 'center',
     color: color.primary,
+  },
+  noSchedule: {
+    marginTop: 30,
+    fontWeight: '700',
+    fontSize: 30,
+    color: color.primary,
+    textAlign: 'center',
   },
 });
