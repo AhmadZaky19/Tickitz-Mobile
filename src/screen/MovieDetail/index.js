@@ -5,21 +5,24 @@ import {Button, Card} from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
 import {Select} from 'native-base';
 import {getDataMovieById} from '../../stores/actions/movie';
+import {getSchedule} from '../../stores/actions/schedule';
 import styles from './style';
 
 import Footer from '../../components/Footer';
 import ebvid from '../../assets/img/ebuid.png';
-// import cineone from '../../assets/img/cineone.png';
-// import hiflix from '../../assets/img/hiflix.png';
+import cineone from '../../assets/img/cineone.png';
+import hiflix from '../../assets/img/hiflix.png';
 
 function MovieDetail({navigation, route}) {
   const dispatch = useDispatch();
+  const schedule = useSelector(state => state.schedule);
 
   const [date, setDate] = useState(new Date(Date.now()));
   const [open, setOpen] = useState(false);
   const [location, setLocation] = useState('');
   const [data, setData] = useState([]);
-  const [schedules, setSchedules] = useState([]);
+  const [schedules, setSchedules] = useState(schedule.data);
+  console.log(schedules);
   const [selectedSchedule, setSelectedSchedule] = useState({
     time: '',
     id_schedule: '',
@@ -27,6 +30,8 @@ function MovieDetail({navigation, route}) {
     location: '',
     price: '',
   });
+  const [paginate, setPaginate] = useState({limit: 2, totalPage: 1});
+  const [page, setPage] = useState(1);
   let [language, setLanguage] = React.useState();
 
   const getMovieById = async () => {
@@ -35,12 +40,25 @@ function MovieDetail({navigation, route}) {
     });
   };
 
+  const getMovieSchedule = async () => {
+    try {
+      const response = await dispatch(
+        getSchedule('', route.params.movieId, '', 'DESC', page, paginate.limit),
+      );
+      console.log(response);
+      setSchedules(response.value.data.data);
+    } catch (error) {
+      setSchedules([]);
+    }
+  };
+
   const handleBook = () => {
     navigation.navigate('Order');
   };
 
   useEffect(() => {
     getMovieById();
+    getMovieSchedule();
   }, []);
 
   return (
@@ -114,105 +132,44 @@ function MovieDetail({navigation, route}) {
             <Select.Item label="Surabaya" value="surabaya" />
           </Select>
         </View>
-        <Card containerStyle={styles.cardSchedule}>
-          <View style={styles.scheduleImage}>
-            <Image source={ebvid} style={styles.cinemaImage} />
-          </View>
-          <Text style={styles.cinemaAddress}>
-            Whatever street No.12, South Purwokerto
-          </Text>
-          <Card.Divider />
-          <View style={styles.scheduleTime}>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-          </View>
-          <View style={styles.scheduleTime}>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-          </View>
-          <View style={styles.schedulePrice}>
-            <Text style={styles.seatDesc}>Price</Text>
-            <Text style={styles.seatPrice}>$10.00/seat</Text>
-          </View>
-          <Button
-            title="Book now"
-            buttonStyle={styles.button}
-            onPress={handleBook}
-          />
-        </Card>
-        <Card containerStyle={styles.cardSchedule}>
-          <View style={styles.scheduleImage}>
-            <Image source={ebvid} style={styles.cinemaImage} />
-          </View>
-          <Text style={styles.cinemaAddress}>
-            Whatever street No.12, South Purwokerto
-          </Text>
-          <Card.Divider />
-          <View style={styles.scheduleTime}>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-          </View>
-          <View style={styles.scheduleTime}>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-            <Pressable style={styles.timeList}>
-              <Text style={styles.time}>08:30am</Text>
-            </Pressable>
-          </View>
-          <View style={styles.schedulePrice}>
-            <Text style={styles.seatDesc}>Price</Text>
-            <Text style={styles.seatPrice}>$10.00/seat</Text>
-          </View>
-          <Button
-            title="Book now"
-            buttonStyle={styles.button}
-            onPress={handleBook}
-          />
-        </Card>
-        <View style={styles.sectionMore}>
-          <View style={styles.moreLine} />
-          <Pressable>
-            <Text style={styles.moreText}>view more</Text>
-          </Pressable>
-          <View style={styles.moreLine} />
-        </View>
+        {schedules.length > 0 ? (
+          schedules.map(item => (
+            <Card containerStyle={styles.cardSchedule} key={item.id}>
+              <View style={styles.scheduleImage}>
+                <Image
+                  source={
+                    item.premiere === 'ebu.id'
+                      ? ebvid
+                      : item.premiere === 'hiflix'
+                      ? hiflix
+                      : cineone
+                  }
+                  style={styles.cinemaImage}
+                />
+              </View>
+              <Text style={styles.cinemaAddress}>{item.location}</Text>
+              <Card.Divider />
+              <View style={styles.scheduleTime}>
+                {item.time.map(time => (
+                  <Pressable style={styles.timeList} key={time}>
+                    <Text style={styles.time}>{time}</Text>
+                  </Pressable>
+                ))}
+              </View>
+              <View style={styles.schedulePrice}>
+                <Text style={styles.seatDesc}>Price</Text>
+                <Text style={styles.seatPrice}>${item.price}.00/seat</Text>
+              </View>
+              <Button
+                title="Book now"
+                buttonStyle={styles.button}
+                onPress={handleBook}
+              />
+            </Card>
+          ))
+        ) : (
+          <Text style={styles.noSchedule}>No schedule</Text>
+        )}
       </View>
       <Footer />
     </ScrollView>
