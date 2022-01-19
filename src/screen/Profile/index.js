@@ -3,7 +3,7 @@ import {useWindowDimensions, Text, ScrollView} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 
 import DetailsAccount from '../../components/DetailsAccount';
-import OrderHistory from '../../components/orderHistory';
+import OrderHistory from '../../components/OrderHistory';
 import Footer from '../../components/Footer';
 
 import styles from './style';
