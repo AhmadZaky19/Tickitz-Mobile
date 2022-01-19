@@ -1,15 +1,71 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {Button, Card, Avatar, Input} from 'react-native-elements';
+import Toast from 'react-native-simple-toast';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/Feather';
+import {
+  getDataUser,
+  updateDataUser,
+  updatePassword,
+  updateUserImage,
+} from '../stores/actions/user';
 import * as color from '../styles/colorStyles';
 
-function DetailsAccount() {
+function DetailsAccount(props) {
+  const dispatch = useDispatch();
+  const authData = useSelector(state => state.auth);
+  const userData = useSelector(state => state.user);
+  const [getUser, setGetUser] = useState({
+    firstName: userData.dataUser.firstName,
+    lastName: userData.dataUser.lastName,
+    email: userData.dataUser.email,
+    phoneNumber: userData.dataUser.phoneNumber,
+  });
+  const [newPass, setNewPass] = useState({
+    newPassword: '',
+    confirmPassword: '',
+  });
+
   const [showPassword, setShowPassword] = useState(true);
+
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const handleUpdateInformation = async () => {
+    try {
+      const response = await dispatch(updateDataUser(getUser));
+      Toast.show(`${response.value.data.msg}`);
+    } catch (error) {
+      Toast.show(`${error.response.data.msg}`);
+    }
+  };
+
+  const changeText = (text, name) => {
+    setGetUser({...getUser, [name]: text});
+    setNewPass({...newPass, [name]: text});
+  };
+
+  const handleUpdatePassword = async () => {
+    try {
+      const response = await dispatch(updatePassword(newPass));
+      Toast.show(`${response.value.data.msg}`);
+      handleReset();
+    } catch (error) {
+      error.response.data.msg && Toast.show(`${error.response.data.msg}`);
+    }
+  };
+
+  const handleReset = () => {
+    setNewPass({newPassword: '', confirmPassword: ''});
+  };
+
+  useEffect(() => {
+    dispatch(getDataUser(authData.idUser));
+  }, [userData.data]);
+
   return (
     <View style={styles.container}>
       <Card containerStyle={styles.info}>
@@ -28,7 +84,10 @@ function DetailsAccount() {
             <Avatar.Accessory size={35} />
           </Avatar>
         </View>
-        <Text style={styles.userName}>Ahmad Zaky</Text>
+        <Text
+          style={
+            styles.userName
+          }>{`${getUser.firstName} ${getUser.lastName}`}</Text>
         <Text style={styles.userStatus}>Moviegoers</Text>
         <Card.Divider />
         <Text style={styles.userLoyalty}>Loyalty Points</Text>
@@ -67,20 +126,38 @@ function DetailsAccount() {
           <Card.Divider />
         </View>
         <Input
-          label="Full Name"
-          placeholder="Write your full name"
+          label="First Name"
+          placeholder="Write your first name"
           inputContainerStyle={styles.input}
+          defaultValue={getUser.firstName}
+          onChangeText={text => changeText(text, 'firstName')}
+        />
+        <Input
+          label="Last Name"
+          placeholder="Write your last name"
+          inputContainerStyle={styles.input}
+          defaultValue={getUser.lastName}
+          onChangeText={text => changeText(text, 'lastName')}
         />
         <Input
           label="E-mail"
           placeholder="Write your email adress"
           keyboardType="email-address"
           inputContainerStyle={styles.input}
+          defaultValue={getUser.email}
+          onChangeText={text => changeText(text, 'email')}
         />
         <Input
           label="Phone Number"
           placeholder="Write your phone number"
           inputContainerStyle={styles.input}
+          defaultValue={getUser.phoneNumber}
+          onChangeText={text => changeText(text, 'phoneNumber')}
+        />
+        <Button
+          title="Update changes"
+          buttonStyle={styles.button}
+          onPress={handleUpdateInformation}
         />
         <View style={styles.section2}>
           <Text style={styles.detailsInfoText}>Account and Privacy</Text>
@@ -98,6 +175,8 @@ function DetailsAccount() {
             />
           }
           secureTextEntry={showPassword}
+          defaultValue={newPass.newPassword}
+          onChangeText={text => changeText(text, 'newPassword')}
         />
         <Input
           label="Confirm"
@@ -111,8 +190,14 @@ function DetailsAccount() {
             />
           }
           secureTextEntry={showPassword}
+          defaultValue={newPass.confirmPassword}
+          onChangeText={text => changeText(text, 'confirmPassword')}
         />
-        <Button title="Update changes" buttonStyle={styles.button} />
+        <Button
+          title="Update password"
+          buttonStyle={styles.button}
+          onPress={handleUpdatePassword}
+        />
       </Card>
     </View>
   );
@@ -255,7 +340,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.primary,
     paddingVertical: 12,
     borderRadius: 4,
-    marginTop: 20,
+    marginTop: 10,
     marginHorizontal: 10,
   },
 });
