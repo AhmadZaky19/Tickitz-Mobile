@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, Text, Image, Pressable} from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  Image,
+  Pressable,
+  TouchableHighlight,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button, Card} from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
@@ -22,7 +29,6 @@ function MovieDetail({navigation, route}) {
   const [location, setLocation] = useState('');
   const [data, setData] = useState([]);
   const [schedules, setSchedules] = useState(schedule.data);
-  console.log(schedules);
   const [selectedSchedule, setSelectedSchedule] = useState({
     time: '',
     id_schedule: '',
@@ -32,6 +38,7 @@ function MovieDetail({navigation, route}) {
   });
   const [paginate, setPaginate] = useState({limit: 2, totalPage: 1});
   const [page, setPage] = useState(1);
+  const [ActivePage, setActivePage] = useState(1);
   let [language, setLanguage] = React.useState();
 
   const getMovieById = async () => {
@@ -45,11 +52,27 @@ function MovieDetail({navigation, route}) {
       const response = await dispatch(
         getSchedule('', route.params.movieId, '', 'DESC', page, paginate.limit),
       );
-      console.log(response);
       setSchedules(response.value.data.data);
+      setPaginate({
+        ...paginate,
+        totalPage: response.value.data.pagination.totalPage,
+      });
     } catch (error) {
       setSchedules([]);
     }
+  };
+
+  let newTotalPage = [];
+  for (let i = 1; i <= paginate.totalPage; i++) {
+    newTotalPage.push(i);
+  }
+
+  const changeHandlerPagination = async num => {
+    const selectedPage = num;
+    console.log('select page =>', selectedPage);
+    setPage(selectedPage);
+    getMovieSchedule();
+    setActivePage(num);
   };
 
   const handleBook = () => {
@@ -59,7 +82,7 @@ function MovieDetail({navigation, route}) {
   useEffect(() => {
     getMovieById();
     getMovieSchedule();
-  }, []);
+  }, [page, paginate.limit]);
 
   return (
     <ScrollView style={styles.container}>
@@ -170,6 +193,29 @@ function MovieDetail({navigation, route}) {
         ) : (
           <Text style={styles.noSchedule}>No schedule</Text>
         )}
+        <View style={styles.schedulePagination_container}>
+          {schedules.length > 0
+            ? newTotalPage.map(num => (
+                <TouchableHighlight
+                  style={
+                    page === num
+                      ? styles.schedulePagination_Active
+                      : styles.schedulePagination_Default
+                  }
+                  underlayColor="none"
+                  onPress={() => changeHandlerPagination(num)}>
+                  <Text
+                    style={
+                      page === num
+                        ? styles.schedulePagination_title_active
+                        : styles.schedulePagination_title_Default
+                    }>
+                    {num}
+                  </Text>
+                </TouchableHighlight>
+              ))
+            : null}
+        </View>
       </View>
       <Footer />
     </ScrollView>
