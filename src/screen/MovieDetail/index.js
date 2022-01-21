@@ -38,7 +38,7 @@ function MovieDetail({navigation, route}) {
   });
   const [paginate, setPaginate] = useState({limit: 2, totalPage: 1});
   const [page, setPage] = useState(1);
-  const [ActivePage, setActivePage] = useState(1);
+  const [activePage, setActivePage] = useState(1);
   let [language, setLanguage] = React.useState();
 
   const getMovieById = async () => {
@@ -198,7 +198,7 @@ function MovieDetail({navigation, route}) {
             ? newTotalPage.map(num => (
                 <TouchableHighlight
                   style={
-                    page === num
+                    activePage === num
                       ? styles.schedulePagination_Active
                       : styles.schedulePagination_Default
                   }
@@ -206,7 +206,7 @@ function MovieDetail({navigation, route}) {
                   onPress={() => changeHandlerPagination(num)}>
                   <Text
                     style={
-                      page === num
+                      activePage === num
                         ? styles.schedulePagination_title_active
                         : styles.schedulePagination_title_Default
                     }>
