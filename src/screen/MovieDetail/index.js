@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Button, Card} from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
 import {Select} from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import {getDataMovieById} from '../../stores/actions/movie';
 import {getSchedule} from '../../stores/actions/schedule';
 import styles from './style';
@@ -24,22 +25,22 @@ function MovieDetail({navigation, route}) {
   const dispatch = useDispatch();
   const schedule = useSelector(state => state.schedule);
 
-  const [date, setDate] = useState(new Date(Date.now()));
+  const [date, setDate] = useState(new Date());
+  console.log(date);
   const [open, setOpen] = useState(false);
   const [location, setLocation] = useState('');
   const [data, setData] = useState([]);
   const [schedules, setSchedules] = useState(schedule.data);
-  const [selectedSchedule, setSelectedSchedule] = useState({
-    time: '',
-    id_schedule: '',
-    premiere: '',
-    location: '',
-    price: '',
-  });
   const [paginate, setPaginate] = useState({limit: 2, totalPage: 1});
   const [page, setPage] = useState(1);
   const [activePage, setActivePage] = useState(1);
-  let [language, setLanguage] = React.useState();
+  // const [selectedSchedule, setSelectedSchedule] = useState({
+  //   time: '',
+  //   id_schedule: '',
+  //   premiere: '',
+  //   location: '',
+  //   price: '',
+  // });
 
   const getMovieById = async () => {
     dispatch(getDataMovieById(route.params.movieId)).then(res => {
@@ -50,7 +51,14 @@ function MovieDetail({navigation, route}) {
   const getMovieSchedule = async () => {
     try {
       const response = await dispatch(
-        getSchedule('', route.params.movieId, '', 'DESC', page, paginate.limit),
+        getSchedule(
+          location,
+          route.params.movieId,
+          '',
+          'DESC',
+          page,
+          paginate.limit,
+        ),
       );
       setSchedules(response.value.data.data);
       setPaginate({
@@ -82,7 +90,7 @@ function MovieDetail({navigation, route}) {
   useEffect(() => {
     getMovieById();
     getMovieSchedule();
-  }, [page, paginate.limit]);
+  }, [location, page, paginate.limit]);
 
   return (
     <ScrollView style={styles.container}>
@@ -130,29 +138,55 @@ function MovieDetail({navigation, route}) {
       </View>
       <View style={styles.schedule}>
         <Text style={styles.scheduleTitle}>Showtime and Tickets</Text>
-        <Button title="Open" onPress={() => setOpen(true)} />
-        <DatePicker
-          modal
-          open={open}
-          date={date}
-          onConfirm={date => {
-            setOpen(false);
-            setDate(date);
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        />
+        <View style={styles.scheduleDetail_card_button_dateContainer}>
+          <DatePicker
+            modal
+            open={open}
+            date={date}
+            fadeToColor="black"
+            textColor="black"
+            onConfirm={date => {
+              setOpen(false);
+              setDate(date);
+            }}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          />
+          <TouchableHighlight
+            style={styles.scheduleDetail_card_button_date}
+            onPress={() => setOpen(true)}
+            underlayColor="none">
+            <View>
+              <View>
+                <Icon
+                  name="calendar-week"
+                  color="#4E4B66"
+                  style={styles.scheduleDetail_card_button_date_icon}
+                  size={20}
+                />
+              </View>
+              <Text style={styles.scheduleDetail_card_button_date_title}>
+                {date ? (
+                  new Date(date).toISOString().split('T')[0]
+                ) : (
+                  <Text>Set a Date</Text>
+                )}
+              </Text>
+            </View>
+          </TouchableHighlight>
+        </View>
         <View style={styles.citySchedule}>
           <Select
             placeholder="Set a city"
-            selectedValue={language}
-            onValueChange={itemValue => setLanguage(itemValue)}
+            selectedValue={location}
+            onValueChange={itemValue => setLocation(itemValue)}
             style={styles.formSelect}>
-            <Select.Item label="Jakarta" value="jakarta" />
+            <Select.Item label="Jakarta Utara" value="jakarta utara" />
+            <Select.Item label="Jakarta Timur" value="jakarta timur" />
+            <Select.Item label="Jakarta Selatan" value="jakarta selatan" />
             <Select.Item label="Bandung" value="bandung" />
             <Select.Item label="Semarang" value="semarang" />
-            <Select.Item label="Surabaya" value="surabaya" />
           </Select>
         </View>
         {schedules.length > 0 ? (

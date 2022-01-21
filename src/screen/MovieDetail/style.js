@@ -199,4 +199,25 @@ export default StyleSheet.create({
     fontWeight: '400',
     color: color.white,
   },
+  scheduleDetail_card_button_dateContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  scheduleDetail_card_button_date: {
+    marginTop: 20,
+    backgroundColor: '#EFF0F6',
+    width: '51%',
+    paddingVertical: 12,
+  },
+  scheduleDetail_card_button_date_icon: {
+    position: 'absolute',
+    left: 18,
+  },
+  scheduleDetail_card_button_date_title: {
+    color: color.textBody1,
+    marginHorizontal: 58,
+    fontSize: 14,
+    marginTop: 2,
+    fontWeight: '600',
+  },
 });
