@@ -114,7 +114,20 @@ export default StyleSheet.create({
   },
   timeList: {
     marginBottom: 10,
-    marginHorizontal: 22,
+    marginHorizontal: 18,
+    fontSize: 12,
+    color: color.textBody1,
+    padding: 3,
+    borderRadius: 4,
+  },
+  timeListActive: {
+    marginBottom: 10,
+    marginHorizontal: 18,
+    fontSize: 12,
+    color: color.white,
+    backgroundColor: color.primary,
+    padding: 3,
+    borderRadius: 4,
   },
   time: {
     fontSize: 12,

@@ -1,12 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  Image,
-  Pressable,
-  TouchableHighlight,
-} from 'react-native';
+import {ScrollView, View, Text, Image, TouchableHighlight} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button, Card} from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
@@ -26,7 +19,6 @@ function MovieDetail({navigation, route}) {
   const schedule = useSelector(state => state.schedule);
 
   const [date, setDate] = useState(new Date());
-  console.log(date);
   const [open, setOpen] = useState(false);
   const [location, setLocation] = useState('');
   const [data, setData] = useState([]);
@@ -34,16 +26,21 @@ function MovieDetail({navigation, route}) {
   const [paginate, setPaginate] = useState({limit: 2, totalPage: 1});
   const [page, setPage] = useState(1);
   const [activePage, setActivePage] = useState(1);
-  // const [selectedSchedule, setSelectedSchedule] = useState({
-  //   time: '',
-  //   id_schedule: '',
-  //   premiere: '',
-  //   location: '',
-  //   price: '',
-  // });
+  const [selectedSchedule, setSelectedSchedule] = useState({
+    time: '',
+    id_schedule: '',
+    premiere: '',
+    location: '',
+    price: '',
+    movieId: '',
+    date: '',
+    dateBooking: '',
+  });
+
+  const {movieId} = route.params;
 
   const getMovieById = async () => {
-    dispatch(getDataMovieById(route.params.movieId)).then(res => {
+    dispatch(getDataMovieById(movieId)).then(res => {
       setData(res.value.data.data[0]);
     });
   };
@@ -51,14 +48,7 @@ function MovieDetail({navigation, route}) {
   const getMovieSchedule = async () => {
     try {
       const response = await dispatch(
-        getSchedule(
-          location,
-          route.params.movieId,
-          '',
-          'DESC',
-          page,
-          paginate.limit,
-        ),
+        getSchedule(location, movieId, '', 'DESC', page, paginate.limit),
       );
       setSchedules(response.value.data.data);
       setPaginate({
@@ -77,14 +67,23 @@ function MovieDetail({navigation, route}) {
 
   const changeHandlerPagination = async num => {
     const selectedPage = num;
-    console.log('select page =>', selectedPage);
     setPage(selectedPage);
     getMovieSchedule();
     setActivePage(num);
   };
 
   const handleBook = () => {
-    navigation.navigate('Order');
+    const {time, id_schedule, premiere, location, price} = selectedSchedule;
+    navigation.navigate('Order', {
+      time,
+      id_schedule,
+      premiere,
+      movieId,
+      location,
+      price,
+      date: new Date(date).toDateString(),
+      dateBooking: new Date(date).toISOString().split('T')[0],
+    });
   };
 
   useEffect(() => {
@@ -208,9 +207,27 @@ function MovieDetail({navigation, route}) {
               <Card.Divider />
               <View style={styles.scheduleTime}>
                 {item.time.map(time => (
-                  <Pressable style={styles.timeList} key={time}>
-                    <Text style={styles.time}>{time}</Text>
-                  </Pressable>
+                  <Text
+                    style={
+                      selectedSchedule.time === time
+                        ? styles.timeListActive
+                        : styles.timeList
+                    }
+                    key={time}
+                    onPress={() => {
+                      setSelectedSchedule({
+                        time: time,
+                        id_schedule: item.id,
+                        premiere: item.premiere,
+                        location: item.location,
+                        price: item.price,
+                        movieId: movieId,
+                        date: date,
+                        dateBooking: date,
+                      });
+                    }}>
+                    {time}
+                  </Text>
                 ))}
               </View>
               <View style={styles.schedulePrice}>
