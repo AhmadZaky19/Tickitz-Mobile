@@ -65,6 +65,7 @@ function Order({navigation, route}) {
       ? navigation.navigate('Payment', {
           sendData: {
             date: data.date,
+            dateBooking: data.dateBooking,
             time: data.time,
             movieId: data.movieId,
             id_schedule: data.id_schedule,
