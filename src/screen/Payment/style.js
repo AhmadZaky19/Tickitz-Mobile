@@ -43,9 +43,17 @@ export default StyleSheet.create({
     marginVertical: 20,
   },
   paymentItem: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 4,
     borderColor: color.border,
+    paddingVertical: 10,
+    width: 90,
+    alignItems: 'center',
+  },
+  paymentItemSelect: {
+    borderWidth: 2,
+    borderRadius: 4,
+    borderColor: color.primary,
     paddingVertical: 10,
     width: 90,
     alignItems: 'center',
