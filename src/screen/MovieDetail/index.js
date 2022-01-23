@@ -5,6 +5,7 @@ import {Button, Card} from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
 import {Select} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Toast from 'react-native-simple-toast';
 import {getDataMovieById} from '../../stores/actions/movie';
 import {getSchedule} from '../../stores/actions/schedule';
 import styles from './style';
@@ -74,16 +75,18 @@ function MovieDetail({navigation, route}) {
 
   const handleBook = () => {
     const {time, id_schedule, premiere, location, price} = selectedSchedule;
-    navigation.navigate('Order', {
-      time,
-      id_schedule,
-      premiere,
-      movieId,
-      location,
-      price,
-      date: new Date(date).toDateString(),
-      dateBooking: new Date(date).toISOString().split('T')[0],
-    });
+    time !== ''
+      ? navigation.navigate('Order', {
+          time,
+          id_schedule,
+          premiere,
+          movieId,
+          location,
+          price,
+          date: new Date(date).toDateString(),
+          dateBooking: new Date(date).toISOString().split('T')[0],
+        })
+      : Toast.show('Choose time first');
   };
 
   useEffect(() => {
