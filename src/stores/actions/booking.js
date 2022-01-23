@@ -12,3 +12,11 @@ export const getDataBookingByUserId = id => {
     payload: axios.get(`booking/user-id/${id}`),
   };
 };
+export const getSeatBooking = (id_schedule, movieId, dateBooking, time) => {
+  return {
+    type: 'GET_SEAT_BOOKING',
+    payload: axios.get(
+      `booking/seatBooking?schedule${id_schedule}&movie=${movieId}&date=${dateBooking}&time=${time}`,
+    ),
+  };
+};

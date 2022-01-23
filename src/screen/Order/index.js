@@ -1,18 +1,85 @@
-import React, {useState} from 'react';
-import {ScrollView, View, Text, Image} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {ScrollView, View, Text, Image, FlatList} from 'react-native';
 import {Card, Button} from 'react-native-elements';
+import {useDispatch} from 'react-redux';
+import Toast from 'react-native-simple-toast';
+import {getDataMovieById} from '../../stores/actions/movie';
+import {getSeatBooking} from '../../stores/actions/booking';
+
 import styles from './style';
 
+import Seat from '../../components/Seat';
 import Footer from '../../components/Footer';
 
-// import ebvid from '../../assets/img/ebuid.png';
+import ebvid from '../../assets/img/ebuid.png';
 import cineone from '../../assets/img/cineone.png';
-// import hiflix from '../../assets/img/hiflix.png';
+import hiflix from '../../assets/img/hiflix.png';
 
-function Order(props) {
-  const handleOrder = () => {
-    props.navigation.navigate('Payment');
+function Order({navigation, route}) {
+  const dispatch = useDispatch();
+
+  const [dataMovie, setDataMovie] = useState([]);
+  const [selectedSeat, setSelectedSeat] = useState([]);
+  console.log(selectedSeat);
+  const [reservedSeat, setReservedSeat] = useState([]);
+
+  const listSeat = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+
+  const [data] = useState(route.params);
+
+  const getMovieById = () => {
+    dispatch(getDataMovieById(data.movieId)).then(res => {
+      setDataMovie(res.value.data.data[0]);
+    });
   };
+
+  const getSeatBooked = () => {
+    dispatch(
+      getSeatBooking(
+        data.id_schedule,
+        data.movieId,
+        data.dateBooking,
+        data.time,
+      ),
+    ).then(res => {
+      const seatBooked = res.value.data.data.map(item => {
+        return item.seat;
+      });
+      setReservedSeat(seatBooked);
+    });
+  };
+
+  const handleSelectedSeat = data => {
+    if (selectedSeat.includes(data)) {
+      const deleteSeat = selectedSeat.filter(el => {
+        return el !== data;
+      });
+      setSelectedSeat(deleteSeat);
+    } else {
+      setSelectedSeat([...selectedSeat, data]);
+    }
+  };
+
+  const handleOrder = () => {
+    selectedSeat.length > 0
+      ? navigation.navigate('Payment', {
+          sendData: {
+            date: data.date,
+            time: data.time,
+            movieId: data.movieId,
+            id_schedule: data.id_schedule,
+            seat: selectedSeat,
+            totalPrice: selectedSeat.length * data.price,
+            movieName: dataMovie.name,
+          },
+        })
+      : Toast.show('Choose seat first');
+  };
+
+  useEffect(() => {
+    getMovieById();
+    getSeatBooked();
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
@@ -20,7 +87,21 @@ function Order(props) {
         <View>
           <Text style={styles.titleSection}>Choose Your Seat</Text>
           <Card containerStyle={styles.seatOrder}>
-            <View style={styles.screenLine} />
+            <View>
+              <View style={styles.screenLine} />
+              <FlatList
+                data={listSeat}
+                keyExtractor={item => item}
+                renderItem={({item}) => (
+                  <Seat
+                    seatAlphabhet={item}
+                    reserved={reservedSeat}
+                    selected={selectedSeat}
+                    selectSeat={handleSelectedSeat}
+                  />
+                )}
+              />
+            </View>
             <Text style={styles.seatDesc}>Seating key</Text>
             <View style={styles.seatDescItem}>
               <View style={styles.seatDescItem1}>
@@ -59,28 +140,41 @@ function Order(props) {
           <Text style={styles.titleSection}>Order Info</Text>
           <Card containerStyle={styles.summaryOrder}>
             <View style={styles.summaryImage}>
-              <Image source={cineone} style={styles.cinemaImage} />
+              <Image
+                source={
+                  data.premiere === 'ebu.id'
+                    ? ebvid
+                    : data.premiere === 'hiflix'
+                    ? hiflix
+                    : cineone
+                }
+                style={styles.cinemaImage}
+              />
             </View>
-            <Text style={styles.cinemaName}>CineOne 21 Cinema</Text>
-            <Text style={styles.movieTitle}>The Lion King</Text>
+            <Text style={styles.cinemaName}>{data.premiere} Cinema</Text>
+            <Text style={styles.movieTitle}>{dataMovie.name}</Text>
             <View style={styles.summary}>
               <View style={styles.summaryItem}>
-                <Text style={styles.summaryLeft}>Tuesday, 07 July 2020</Text>
-                <Text style={styles.summaryRight}>02:00pm</Text>
+                <Text style={styles.summaryLeft}>{data.date}</Text>
+                <Text style={styles.summaryRight}>{data.time}</Text>
               </View>
               <View style={styles.summaryItem}>
                 <Text style={styles.summaryLeft}>One ticket price</Text>
-                <Text style={styles.summaryRight}>$10</Text>
+                <Text style={styles.summaryRight}>${data.price}</Text>
               </View>
               <View style={styles.summaryItem}>
                 <Text style={styles.summaryLeft}>Seat choosed</Text>
-                <Text style={styles.summaryRight}>C4, C5, C6</Text>
+                <Text style={styles.summaryRight}>
+                  {selectedSeat.length > 0 ? selectedSeat.join(', ') : null}
+                </Text>
               </View>
             </View>
             <Card.Divider />
             <View style={styles.summaryPrice}>
               <Text style={styles.summaryDesc}>Total Payment</Text>
-              <Text style={styles.summaryTotalPrice}>$30</Text>
+              <Text style={styles.summaryTotalPrice}>{`$${
+                data.price * selectedSeat.length
+              }`}</Text>
             </View>
           </Card>
         </View>

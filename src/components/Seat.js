@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 
 function Seat(props) {
   const [leftSideSeat, setLeftSideSeat] = useState([1, 2, 3, 4, 5, 6, 7]);
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   seat: {
-    width: 18,
-    height: 18,
+    width: 17,
+    height: 17,
     borderRadius: 3,
     marginHorizontal: 2,
   },

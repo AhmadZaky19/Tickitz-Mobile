@@ -21,17 +21,23 @@ export default StyleSheet.create({
   },
   screenLine: {
     flex: 1,
-    height: 3,
+    height: 4,
     backgroundColor: color.primary,
+    borderRadius: 4,
+    marginTop: 20,
+    marginBottom: 10,
+    marginHorizontal: 10,
   },
   seatDesc: {
     fontWeight: '600',
     color: '#000000',
     fontSize: 16,
     marginVertical: 15,
+    marginHorizontal: 10,
   },
   seatDescItem: {
     marginBottom: 15,
+    marginLeft: 12,
   },
   seatDescItem1: {
     flexDirection: 'row',
