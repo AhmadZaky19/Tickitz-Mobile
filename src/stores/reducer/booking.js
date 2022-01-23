@@ -4,6 +4,7 @@ const initialState = {
   msg: '',
   data: [],
   seat: [],
+  ticket: {},
 };
 
 const booking = (state = initialState, action) => {
@@ -75,6 +76,31 @@ const booking = (state = initialState, action) => {
       };
     }
     case 'GET_SEAT_BOOKING_REJECTED': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        msg: action.payload.response.data.msg,
+      };
+    }
+    case 'GET_BOOKING_BY_BOOKING_ID_PENDING': {
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        msg: '',
+      };
+    }
+    case 'GET_BOOKING_BY_BOOKING_ID_FULFILLED': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        ticket: action.payload.data.data,
+        msg: action.payload.data.msg,
+      };
+    }
+    case 'GET_BOOKING_BY_BOOKING_ID_REJECTED': {
       return {
         ...state,
         isLoading: false,

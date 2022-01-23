@@ -20,3 +20,9 @@ export const getSeatBooking = (id_schedule, movieId, dateBooking, time) => {
     ),
   };
 };
+export const getDataBookingByBookingId = ticketId => {
+  return {
+    type: 'GET_BOOKING_BY_BOOKING_ID',
+    payload: axios.get(`booking/booking-id/${ticketId}`),
+  };
+};
