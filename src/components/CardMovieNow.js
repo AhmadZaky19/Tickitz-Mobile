@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getDataMovie} from '../stores/actions/movie';
 import * as color from '../styles/colorStyles';
+import {API_HOST} from '@env';
 
 function CardMovieNow({navigation}) {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ function CardMovieNow({navigation}) {
                   source={
                     item.image
                       ? {
-                          uri: `http://192.168.1.5:3001/uploads/movie/${item.image}`,
+                          uri: `${API_HOST}uploads/movie/${item.image}`,
                         }
                       : require('../assets/img/defaultMovie.jpg')
                   }

@@ -21,6 +21,7 @@ import {
   updateUserImage,
 } from '../stores/actions/user';
 import * as color from '../styles/colorStyles';
+import {API_HOST} from '@env';
 
 const actionSheetRef = createRef();
 
@@ -161,7 +162,7 @@ function DetailsAccount(props) {
             source={
               userData.dataUser.image
                 ? {
-                    uri: `http://192.168.1.5:3001/uploads/user/${userData.dataUser.image}`,
+                    uri: `${API_HOST}uploads/user/${userData.dataUser.image}`,
                   }
                 : require('../assets/img/user_icon.png')
             }>

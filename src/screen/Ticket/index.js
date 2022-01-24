@@ -5,6 +5,7 @@ import {Button} from 'react-native-elements';
 import QRCode from 'react-native-qrcode-svg';
 import {getDataBookingByBookingId} from '../../stores/actions/booking';
 import styles from './style';
+import {API_HOST} from '@env';
 
 import Footer from '../../components/Footer';
 
@@ -41,7 +42,7 @@ function Ticket({navigation, route}) {
         <View style={styles.ticketInfo}>
           <View style={styles.barcodeArea}>
             <QRCode
-              value={`http://192.168.1.5:3001/booking/use-ticket/${
+              value={`${API_HOST}booking/use-ticket/${
                 ticket.id ? ticket.id : ticketId.idTicket
               }`}
               size={200}
