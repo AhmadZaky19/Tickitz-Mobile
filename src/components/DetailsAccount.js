@@ -1,8 +1,17 @@
-import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import React, {useState, useEffect, createRef} from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  PermissionsAndroid,
+  TouchableOpacity,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button, Card, Avatar, Input} from 'react-native-elements';
 import Toast from 'react-native-simple-toast';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import ActionSheet from 'react-native-actions-sheet';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/Feather';
 import {
@@ -12,6 +21,8 @@ import {
   updateUserImage,
 } from '../stores/actions/user';
 import * as color from '../styles/colorStyles';
+
+const actionSheetRef = createRef();
 
 function DetailsAccount(props) {
   const dispatch = useDispatch();
@@ -24,6 +35,7 @@ function DetailsAccount(props) {
     phoneNumber: userData.dataUser.phoneNumber,
     image: userData.dataUser.image,
   });
+  console.log(getUser);
   const [newPass, setNewPass] = useState({
     newPassword: '',
     confirmPassword: '',
@@ -59,6 +71,75 @@ function DetailsAccount(props) {
     }
   };
 
+  const handleTakeCamera = async () => {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      {
+        title: 'App Camera Permission',
+        message: 'App needs access to your camera ',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      try {
+        const result = await launchCamera();
+        if (result.didCancel) {
+        } else {
+          const setData = {
+            image: {
+              uri: result.assets[0].uri,
+              name: result.assets[0].fileName,
+              type: result.assets[0].type,
+            },
+          };
+          const formData = new FormData();
+          for (const data in setData) {
+            formData.append(data, setData[data]);
+          }
+          await dispatch(updateUserImage(formData))
+            .then(res => {
+              Toast.show('Success update image');
+              dispatch(getDataUser(authData.idUser));
+            })
+            .catch(err => {
+              console.log(err.response);
+            });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log('Camera permission denied');
+    }
+  };
+
+  const handleChooseGallery = async () => {
+    try {
+      const result = await launchImageLibrary();
+      const setData = {
+        image: {
+          uri: result.assets[0].uri,
+          name: result.assets[0].fileName,
+          type: result.assets[0].type,
+        },
+      };
+      const formData = new FormData();
+      for (const data in setData) {
+        formData.append(data, setData[data]);
+      }
+      await dispatch(updateUserImage(formData))
+        .then(res => {
+          Toast.show('Success update image');
+          dispatch(getDataUser(authData.idUser));
+        })
+        .catch(err => {
+          console.log(err, 'error then');
+        });
+    } catch (error) {}
+  };
+
   const handleReset = () => {
     setNewPass({newPassword: '', confirmPassword: ''});
   };
@@ -78,14 +159,44 @@ function DetailsAccount(props) {
             size={140}
             rounded
             source={
-              getUser.image
+              userData.dataUser.image
                 ? {
-                    uri: `http://192.168.1.5:3001/uploads/user/${getUser.image}`,
+                    uri: `http://192.168.1.5:3001/uploads/user/${userData.dataUser.image}`,
                   }
                 : require('../assets/img/user_icon.png')
             }>
-            <Avatar.Accessory size={35} />
+            <Avatar.Accessory
+              size={35}
+              onPress={() => actionSheetRef.current?.setModalVisible()}
+            />
           </Avatar>
+          <ActionSheet ref={actionSheetRef}>
+            <View style={styles.actionSheet}>
+              <TouchableOpacity
+                onPress={handleTakeCamera}
+                style={styles.actionSheetLeft}>
+                <View style={styles.actionSheetIcon}>
+                  <Icon name="camera" size={24} color="#000" />
+                </View>
+                <View>
+                  <Text style={styles.actionSheetText}>Take a photo</Text>
+                </View>
+              </TouchableOpacity>
+
+              <View style={styles.actionSheetRight}>
+                <TouchableOpacity onPress={handleChooseGallery}>
+                  <View style={styles.actionSheetIcon}>
+                    <Icon name="image" size={24} color="#000" />
+                  </View>
+                  <View>
+                    <Text style={styles.actionSheetText}>
+                      Choose from gallery
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ActionSheet>
         </View>
         <Text
           style={
@@ -345,6 +456,34 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginTop: 10,
     marginHorizontal: 10,
+  },
+  actionSheet: {
+    height: 180,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 22,
+    paddingHorizontal: 22,
+    marginHorizontal: 2,
+  },
+  actionSheetLeft: {
+    width: '50%',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  actionSheetRight: {
+    marginHorizontal: 2,
+    width: '50%',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  actionSheetIcon: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  actionSheetText: {
+    textAlign: 'center',
+    marginTop: 22,
   },
 });
 
