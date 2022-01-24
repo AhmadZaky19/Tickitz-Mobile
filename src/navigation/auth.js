@@ -12,13 +12,13 @@ function AuthNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={Register}
-        name="Register"
+        component={Login}
+        name="Login"
         options={{headerShown: false}}
       />
       <Stack.Screen
-        component={Login}
-        name="Login"
+        component={Register}
+        name="Register"
         options={{headerShown: false}}
       />
       <Stack.Screen
