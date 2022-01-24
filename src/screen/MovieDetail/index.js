@@ -213,7 +213,8 @@ function MovieDetail({navigation, route}) {
                 {item.time.map(time => (
                   <Text
                     style={
-                      selectedSchedule.time === time
+                      selectedSchedule.time === time &&
+                      selectedSchedule.id_schedule === item.id
                         ? styles.timeListActive
                         : styles.timeList
                     }
