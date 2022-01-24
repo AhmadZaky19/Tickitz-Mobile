@@ -1,15 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, Image, Pressable, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {Input, Button} from 'react-native-elements';
+import {useDispatch, useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {connect} from 'react-redux';
 import {login} from '../../stores/actions/auth';
+import {getDataUser} from '../../stores/actions/user';
 
 import styles from './style';
 
 function Login(props) {
+  const dispatch = useDispatch();
+
   const [form, setForm] = useState({email: '', password: ''});
   const [showPassword, setShowPassword] = useState(true);
 
@@ -24,6 +28,7 @@ function Login(props) {
   const handleLogin = async () => {
     try {
       const result = await props.login(form);
+      console.log(result);
       await AsyncStorage.setItem('token', result.value.data.data.token);
       await AsyncStorage.setItem(
         'refreshToken',
@@ -34,6 +39,7 @@ function Login(props) {
         email: '',
         password: '',
       });
+      dispatch(getDataUser(result.value.data.data.id));
       props.navigation.navigate('AppScreen', {
         screen: 'Home',
       });
@@ -49,6 +55,10 @@ function Login(props) {
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  // useEffect(() => {
+  //   dispatch(getDataUser(authData.idUser));
+  // }, [userData.data]);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
