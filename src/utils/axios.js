@@ -1,10 +1,11 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {API_HOST} from '@env';
+import {API_BACKEND} from '@env';
 
 const axiosApiIntaces = axios.create({
-  baseURL: API_HOST,
+  baseURL: API_BACKEND,
 });
+console.log(API_BACKEND);
 
 const setToken = async (token, refreshToken) => {
   try {

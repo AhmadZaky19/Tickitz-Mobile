@@ -4,7 +4,8 @@ import {Button, Card} from 'react-native-elements';
 import {useDispatch, useSelector} from 'react-redux';
 import {getDataMovie} from '../stores/actions/movie';
 import * as color from '../styles/colorStyles';
-import {API_HOST} from '@env';
+import {API_BACKEND} from '@env';
+console.log(API_BACKEND);
 
 function CardMovieUpcoming() {
   const dispatch = useDispatch();
@@ -193,7 +194,7 @@ function CardMovieUpcoming() {
                   source={
                     item.image
                       ? {
-                          uri: `${API_HOST}uploads/movie/${item.image}`,
+                          uri: `${API_BACKEND}uploads/movie/${item.image}`,
                         }
                       : require('../assets/img/defaultMovie.jpg')
                   }

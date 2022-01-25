@@ -14,7 +14,8 @@ import Footer from '../../components/Footer';
 import ebvid from '../../assets/img/ebuid.png';
 import cineone from '../../assets/img/cineone.png';
 import hiflix from '../../assets/img/hiflix.png';
-import {API_HOST} from '@env';
+import {API_BACKEND} from '@env';
+console.log(API_BACKEND);
 
 function MovieDetail({navigation, route}) {
   const dispatch = useDispatch();
@@ -102,7 +103,7 @@ function MovieDetail({navigation, route}) {
           source={
             data.image
               ? {
-                  uri: `${API_HOST}uploads/movie/${data.image}`,
+                  uri: `${API_BACKEND}uploads/movie/${data.image}`,
                 }
               : require('../../assets/img/defaultMovie.jpg')
           }
