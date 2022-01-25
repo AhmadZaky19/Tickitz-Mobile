@@ -16,7 +16,7 @@
 
 ## Description
 
-**Cinetix Mobile App** is a simple ticketing application that can facilitating consumers to booking a ticket in a cinema, whether order 1 or more ticket in one transaction. this is the repository for the frontend app, you can check the backend repository below.
+**Tickitz Mobile App** is a simple ticketing application that can facilitating consumers to booking a ticket in a cinema, whether order 1 or more ticket in one transaction. this is the repository for the frontend app, you can check the backend repository below.
 
 ## Features
 
