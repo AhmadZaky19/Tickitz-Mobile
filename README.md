@@ -41,11 +41,12 @@ Tech that use in this project:
 4. run `npx react-native run-android` to run the in your device/emulator
 
 ## Screenshoots
-
-<img width="100" src="./screenshots/home.png">
-<img width="100" src="./screenshots/login.png">
-<img width="100" src="./screenshots/seat.png">
-<img width="100" src="./screenshots/order_history.png">
+<p float="left">
+<img width="230" src="./screenshots/home.png">
+<img width="230" src="./screenshots/login.png">
+<img width="230" src="./screenshots/seat.png">
+<img width="230" src="./screenshots/order_history.png">
+</p>
 
 ## Demo Project
 
