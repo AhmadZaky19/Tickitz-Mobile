@@ -1,4 +1,4 @@
-# Cinetix Mobile App
+# Tickitz Mobile App
 
 <div align="center">
     <img width="250" src="./src/assets/img/tickitzPurple.png">
@@ -36,7 +36,7 @@ Tech that use in this project:
 ## Installation for Development
 
 1. Open your terminal or command prompt
-2. Type `git clone https://github.com/AhmadZaky19/Cinetix-Frontend.git`
+2. Type `https://github.com/AhmadZaky19/Tickitz-Mobile.git`
 3. Type `npm install` to installing dependencies
 4. run `npx react-native run-android` to run the in your device/emulator
 
