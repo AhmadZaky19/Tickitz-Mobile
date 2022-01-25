@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {
   DrawerContentScrollView,
@@ -6,11 +6,31 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch, useSelector} from 'react-redux';
+import {Avatar} from 'react-native-elements';
+import {getDataUser} from '../stores/actions/user';
 import axios from '../utils/axios';
+import {API_HOST} from '@env';
 
 import Icon from 'react-native-vector-icons/Feather';
 
 function DrawerContent(props) {
+  const dispatch = useDispatch();
+
+  const authData = useSelector(state => state.auth);
+  const user = useSelector(state => state.user.dataUser);
+
+  const [getUser, setGetUser] = useState({});
+
+  const getUserData = async () => {
+    try {
+      const response = await dispatch(getDataUser(authData.idUser));
+      setGetUser(response.value.data.data[0]);
+    } catch (error) {
+      Error(error.response);
+    }
+  };
+
   const handleSignout = async () => {
     try {
       await axios.post('auth/logout');
@@ -21,13 +41,29 @@ function DrawerContent(props) {
     }
     alert('Signed out');
   };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   return (
     <View style={styles.container}>
       <DrawerContentScrollView {...props}>
         <View style={styles.containerProfile}>
-          <View style={styles.avatar} />
+          <Avatar
+            size={40}
+            rounded
+            source={
+              user.image
+                ? {
+                    uri: `${API_HOST}uploads/user/${user.image}`,
+                  }
+                : require('../assets/img/user_icon.png')
+            }
+          />
           <View style={styles.biodata}>
-            <Text style={styles.title}>Anonymous</Text>
+            <Text
+              style={styles.title}>{`${user.firstName} ${user.lastName}`}</Text>
             <Text style={styles.caption}>Moviegoers</Text>
           </View>
         </View>
