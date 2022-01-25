@@ -36,7 +36,7 @@ function DetailsAccount(props) {
     phoneNumber: userData.dataUser.phoneNumber,
     image: userData.dataUser.image,
   });
-  console.log(getUser);
+
   const [newPass, setNewPass] = useState({
     newPassword: '',
     confirmPassword: '',
@@ -72,6 +72,19 @@ function DetailsAccount(props) {
     }
   };
 
+  const handleUpdateImage = setData => {
+    const formData = new FormData();
+    formData.append('image', setData.image);
+    dispatch(updateUserImage(formData))
+      .then(res => {
+        Toast.show('Success update image');
+        dispatch(getDataUser(authData.idUser));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   const handleTakeCamera = async () => {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.CAMERA,
@@ -95,18 +108,9 @@ function DetailsAccount(props) {
               type: result.assets[0].type,
             },
           };
-          const formData = new FormData();
-          for (const data in setData) {
-            formData.append(data, setData[data]);
-          }
-          await dispatch(updateUserImage(formData))
-            .then(res => {
-              Toast.show('Success update image');
-              dispatch(getDataUser(authData.idUser));
-            })
-            .catch(err => {
-              console.log(err.response);
-            });
+          setTimeout(() => {
+            handleUpdateImage(setData);
+          }, 1000);
         }
       } catch (error) {
         console.log(error);
@@ -126,19 +130,12 @@ function DetailsAccount(props) {
           type: result.assets[0].type,
         },
       };
-      const formData = new FormData();
-      for (const data in setData) {
-        formData.append(data, setData[data]);
-      }
-      await dispatch(updateUserImage(formData))
-        .then(res => {
-          Toast.show('Success update image');
-          dispatch(getDataUser(authData.idUser));
-        })
-        .catch(err => {
-          console.log(err, 'error then');
-        });
-    } catch (error) {}
+      setTimeout(() => {
+        handleUpdateImage(setData);
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleReset = () => {
